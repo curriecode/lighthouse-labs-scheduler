@@ -12,12 +12,22 @@ export default function DayListItem(props) {
     if (props.spots === 0) {
       return 'no spots remaining'
     }
-    if (props.spots === 2) {
-      return '2 spots remaining'
-    }
     if (props.spots === 1) {
       return '1 spot remaining'
     }
+    if (props.spots === 2) {
+      return '2 spots remaining'
+    }
+    if (props.spots === 3) {
+      return '3 spots remaining'
+    }
+    if (props.spots === 4) {
+      return '4 spots remaining'
+    }
+    if (props.spots === 5) {
+      return '5 spots remaining'
+    }
+
   }
   return (
     <li
