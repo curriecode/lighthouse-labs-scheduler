@@ -15,8 +15,8 @@ import Header from "components/Appointment/Header"
 import Empty from "components/Appointment/Empty"
 import Show from "components/Appointment/Show"
 import Confirm from "components/Appointment/Confirm"
-import { act } from "@testing-library/react";
-
+import Status from "components/Appointment/Status"
+import Error from "components/Appointment/Error"
 
 storiesOf("Button", module)
   .addParameters({
@@ -143,9 +143,16 @@ storiesOf("Appointment", module)
   .add("Appointment with Time", () => <Appointment time="12pm" />)
   .add("Header", () => <Header time="12pm" />)
   .add("Empty", () => <Empty onAdd={action("onAdd")} />)
-  .add("Show", () => <Show onEdit={action("onEdit")} />)
+  .add("Show", () => <Show onEdit={action("onEdit")}
+    onDelete={action("onDelete")} />)
   .add("Confirm", () => <Confirm onCancel={action("onCancel")}
     onConfirm={action("onConfirm")}
     message={"Delete the appointment?"} />)
+  .add("Deleting", () => <Status message={"Deleting"} />)
+  .add("Saving", () => <Status message={"Saving"} />)
+  .add("Error Deleting", () => <Error onClose={action("onClose")}
+    message={"Could not delete appointment."} />)
+  .add("Error Saving", () => <Error onClose={action("onClose")}
+    message={"Could not save appointment."} />)
 
 
