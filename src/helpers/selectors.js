@@ -7,12 +7,20 @@ export function getAppointmentsForDay(state, day) {
   if (filteredDays.length === 0) {
     return result;
   }
-  filteredDays[0].appointments.map((item) => {
-    if (state.appointments[item]) {
-      result.push(state.appointments[item])
+
+  filteredDays[0].appointments.map((id) => {
+    if (state.appointments[id]) {
+      result.push(state.appointments[id])
     }
   })
 
   return result
-
 };
+
+export function getInterview(state, interview) {
+  if (!state.interviewers || !interview) {
+    return null
+  }
+
+  return { "interviewer": state.interviewers[interview.interviewer], "student": interview.student } // return the full interviewer object
+}
