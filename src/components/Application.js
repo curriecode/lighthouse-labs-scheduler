@@ -9,64 +9,10 @@ import Appointment from "components/Appointment"
 // import InterviewerList from "components/InterviewList"
 
 
-// const appointments = [
-//   {
-//     id: 1,
-//     time: "12pm",
-//   },
-//   {
-//     id: 2,
-//     time: "1pm",
-//     interview: {
-//       student: "Lydia Miller-Jones",
-//       interviewer: {
-//         id: 1,
-//         name: "Sylvia Palmer",
-//         avatar: "https://i.imgur.com/LpaY82x.png",
-//       }
-//     }
-//   },
-//   {
-//     id: 3,
-//     time: "2pm",
-//     interview: {
-//       student: "Derp Derpington",
-//       interviewer: {
-//         id: 1,
-//         name: "Sylvia Palmer",
-//         avatar: "https://i.imgur.com/LpaY82x.png",
-//       }
-//     }
-//   },
-//   {
-//     id: 4,
-//     time: "3pm",
-//     interview: {
-//       student: "JimJam",
-//       interviewer: {
-//         id: 1,
-//         name: "Sylvia Palmer",
-//         avatar: "https://i.imgur.com/LpaY82x.png",
-//       }
-//     }
-//   },
-//   {
-//     id: 5,
-//     time: "1pm",
-//     interview: {
-//       student: "Lydia Miller-Jones",
-//       interviewer: {
-//         id: 1,
-//         name: "Sylvia Palmer",
-//         avatar: "https://i.imgur.com/LpaY82x.png",
-//       }
-//     }
-//   }
-// ];
 
 export default function Application(props) {
   const setDay = day => setState({ ...state, day });
-  // const setDays = days => setState(prev => ({ ...prev, days }));
+
   function bookInterview(id, interview) {
     const appointment = {
       ...state.appointments[id],
@@ -76,6 +22,33 @@ export default function Application(props) {
     return axios.put("http://localhost:8001/api/appointments/" + appointment.id, appointment)
       .then((res) => {
         let appointment = JSON.parse(res.config.data)
+        const appointments = {
+          ...state.appointments,
+          [id]: appointment
+        };
+        setState({
+          ...state,
+          appointments
+        });
+        console.log("res", res)
+      })
+      .catch((err) => {
+        console.log("err", err)
+      })
+  }
+
+  function cancelInterview(id, interview) {
+    const appointment = {
+      ...state.appointments[id],
+      interview: { ...interview }
+    };
+    interview = null
+
+
+    return axios.delete("http://localhost:8001/api/appointments/" + appointment.id, appointment)
+      .then((res) => {
+        let appointment = JSON.parse(res.config.data)
+
         const appointments = {
           ...state.appointments,
           [id]: appointment
@@ -126,6 +99,7 @@ export default function Application(props) {
         interview={interview}
         interviewers={interviewers}
         bookInterview={bookInterview}
+        cancelInterview={cancelInterview}
       />
     );
   });
