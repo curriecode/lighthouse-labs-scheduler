@@ -6,6 +6,8 @@ import "components/Application.scss";
 import DayList from "components/DayList"
 import { getAppointmentsForDay, getInterview, getInterviewersForDay } from "helpers/selectors"
 import Appointment from "components/Appointment"
+// import InterviewerList from "components/InterviewList"
+
 
 // const appointments = [
 //   {
@@ -65,7 +67,29 @@ import Appointment from "components/Appointment"
 export default function Application(props) {
   const setDay = day => setState({ ...state, day });
   // const setDays = days => setState(prev => ({ ...prev, days }));
+  function bookInterview(id, interview) {
+    const appointment = {
+      ...state.appointments[id],
+      interview: { ...interview }
+    };
 
+    return axios.put("http://localhost:8001/api/appointments/" + appointment.id, appointment)
+      .then((res) => {
+        let appointment = JSON.parse(res.config.data)
+        const appointments = {
+          ...state.appointments,
+          [id]: appointment
+        };
+        setState({
+          ...state,
+          appointments
+        });
+        console.log("res", res)
+      })
+      .catch((err) => {
+        console.log("err", err)
+      })
+  }
 
   const [state, setState] = useState({
     day: "Monday",
@@ -94,13 +118,14 @@ export default function Application(props) {
 
   const apptList = getAppointmentsForDay(state, state.day).map(appointment => {
     const interview = getInterview(state, appointment.interview);
-    const interviewer = getInterviewersForDay(state, appointment.interviewer);
+    const interviewers = getInterviewersForDay(state, state.day);
     return (
       <Appointment
         key={appointment.id}
         {...appointment}
         interview={interview}
-        interviewer={interviewer}
+        interviewers={interviewers}
+        bookInterview={bookInterview}
       />
     );
   });

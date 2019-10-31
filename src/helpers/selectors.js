@@ -35,11 +35,10 @@ export function getInterviewersForDay(state, day) {
     return result;
   }
 
-  filteredDays[0].appointments.map((id) => {
-    if (state.appointments[id]) {
+  filteredDays[0].interviewers.map((id) => {
+    if (state.interviewers[id]) {
       result.push(state.interviewers[id])
     }
   })
-
   return result
 };
