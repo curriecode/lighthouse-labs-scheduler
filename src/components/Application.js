@@ -14,6 +14,7 @@ export default function Application(props) {
   const setDay = day => setState({ ...state, day });
 
   function bookInterview(id, interview) {
+
     const appointment = {
       ...state.appointments[id],
       interview: { ...interview }
@@ -42,21 +43,22 @@ export default function Application(props) {
       ...state.appointments[id],
       interview: { ...interview }
     };
-    interview = null
+    console.log("interview is: ", interview)
 
+    interview = null
 
     return axios.delete("http://localhost:8001/api/appointments/" + appointment.id, appointment)
       .then((res) => {
-        let appointment = JSON.parse(res.config.data)
+        // let appointment = JSON.parse(res.config.data)
 
-        const appointments = {
-          ...state.appointments,
-          [id]: appointment
-        };
-        setState({
-          ...state,
-          appointments
-        });
+        // const appointments = {
+        //   ...state.appointments,
+        //   [id]: appointment
+        // };
+        // setState({
+        //   ...state,
+        //   appointments
+        // });
         console.log("res", res)
       })
       .catch((err) => {

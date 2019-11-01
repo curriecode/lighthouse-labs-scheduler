@@ -4,7 +4,13 @@ import Button from "../Button"
 
 export default function Form(props) {
   const [name, setName] = useState(props.name || "");
-  const [interviewer, setInterviewer] = useState([props.interviewer] || null);
+  let defaultInterviewId;
+  if (!props.interview || !props.interview.interviewer) {
+    defaultInterviewId = null
+  } else {
+    defaultInterviewId = props.interview.interviewer.id
+  }
+  const [interviewer, setInterviewer] = useState(defaultInterviewId);
 
   function reset() {
     setName("");
@@ -16,6 +22,14 @@ export default function Form(props) {
     props.onCancel();
   }
 
+  let placeholderText = "";
+
+  if (props.interview && props.interview.student) {
+    placeholderText = props.interview.student
+  } else {
+    placeholderText = "Enter Student Name"
+  }
+
   return (
     <main className="appointment__card appointment__card--create">
       <section className="appointment__card-left">
@@ -24,7 +38,7 @@ export default function Form(props) {
             className="appointment__create-input text--semi-bold"
             name="name"
             type="text"
-            placeholder="Enter Student Name"
+            placeholder={placeholderText}
             value={name}
             onChange={(event) => {
               setName(event.target.value)
