@@ -7,6 +7,7 @@ import useVisualMode from "hooks/useVisualMode"
 import Status from "components/Appointment/Status"
 import Form from './Form';
 import Confirm from "./Confirm"
+import Error from "./Error"
 
 
 
@@ -18,6 +19,8 @@ export default function Appointment(props) {
   const DELETING = "DELETING"
   const CONFIRM = "CONFIRM"
   const EDIT = "EDIT"
+  const ERROR_SAVE = "ERROR_SAVE"
+  const ERROR_DELETE = "ERROR_DELETE"
   // props.interviewer = [];
   const { mode, transition, back } = useVisualMode(
     props.interview ? SHOW : EMPTY
@@ -31,7 +34,12 @@ export default function Appointment(props) {
       student: name,
       interviewer
     };
-    props.bookInterview(props.id, interview).then(() => transition(SHOW))
+    props.bookInterview(props.id, interview)
+      .then(() => transition(SHOW))
+      .catch((err) => {
+        transition(ERROR_SAVE)
+        // console.log("error", err)
+      })
   }
 
   function cancel(name, interviewer) {
@@ -40,8 +48,9 @@ export default function Appointment(props) {
       student: name,
       interviewer
     };
-    console.log("here cancel")
-    props.cancelInterview(props.id, interview).then(() => transition(EMPTY))
+    props.cancelInterview(props.id, interview)
+      .then(() => transition(EMPTY))
+      .catch(() => transition(ERROR_DELETE))
   }
 
   return (
@@ -50,6 +59,14 @@ export default function Appointment(props) {
       <Header time={props.time} />
 
       {mode === EMPTY && <Empty onAdd={() => transition(CREATE)} />}
+
+      {
+        mode === ERROR_SAVE && <Error onClose={() => transition(EMPTY)} />
+      }
+
+      {
+        mode === ERROR_DELETE && <Error onClose={() => transition(EMPTY)} />
+      }
 
       {
         mode === CREATE && (<Form onCancel={() => back()}
@@ -69,7 +86,6 @@ export default function Appointment(props) {
 
       {
         mode === EDIT && (
-          //need to get students name
           <Form onCancel={() => back()}
             interviewers={props.interviewers}
             interview={props.interview}
