@@ -1,6 +1,8 @@
 import React, { Fragment } from "react";
 import InterviewerListItem from "./InterviewerListItem";
 import "./InterviewerList.scss"
+import PropTypes from 'prop-types';
+
 
 export default function InterviewerList(props) {
   const interviews = props.interviewers.map(mentor => {
@@ -24,3 +26,9 @@ export default function InterviewerList(props) {
     </section>
   </Fragment>
 }
+
+InterviewerList.propTypes = {
+  value: PropTypes.number,
+  onChange: PropTypes.func.isRequired
+};
+

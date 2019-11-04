@@ -84,6 +84,7 @@ export default function useApplicationData() {
         };
         dispatch({ type: SET_INTERVIEW, value: appointments })
         dispatch({ type: SET_SPOTS, value: -1 })
+
       })
       .catch((err) => {
         throw err;
