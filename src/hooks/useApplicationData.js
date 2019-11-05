@@ -53,7 +53,7 @@ export default function useApplicationData() {
       axios.get("http://localhost:8001/api/interviewers")
     ])
       .then((res) => {
-        console.log(res[2].data);
+        // console.log(res[2].data);
 
         dispatch({
           type: SET_APPLICATION_DATA, value: {
@@ -74,9 +74,10 @@ export default function useApplicationData() {
       ...state.appointments[id],
       interview: { ...interview }
     };
-
+    console.log("appointment id: ", appointment.id)
     return axios.put("http://localhost:8001/api/appointments/" + appointment.id, appointment)
       .then((res) => {
+        // console.log("put res", res)
         let appointment = JSON.parse(res.config.data)
         const appointments = {
           ...state.appointments,
