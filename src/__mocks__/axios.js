@@ -94,7 +94,6 @@ export default {
 
 
   put: jest.fn(url => {
-    // let appt = "{"id":3,"time":"12pm","interview":{"student":"asdf","interviewer":2}}"
     let appt = JSON.stringify({
       id: 1,
       time: "1pm",
