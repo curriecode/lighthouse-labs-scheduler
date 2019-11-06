@@ -28,7 +28,6 @@ function reducer(state, action) {
           return day;
         }
       })
-      console.log("spots fired reducer")
       return { ...state, days: spotsChanged };
     default:
       throw new Error(
