@@ -34,11 +34,12 @@ export default function Appointment(props) {
       student: name,
       interviewer
     };
+    console.log("this is id", props.id)
     props.bookInterview(props.id, interview)
       .then(() => transition(SHOW))
       .catch((err) => {
         transition(ERROR_SAVE)
-        // console.log("error", err)
+        console.log("error bbbbb", err)
       })
   }
 
@@ -56,7 +57,8 @@ export default function Appointment(props) {
   return (
     <article
       className="appointment"
-      data-testid="appointment">
+      data-testid="appointment"
+    >
 
       <Header time={props.time} />
 

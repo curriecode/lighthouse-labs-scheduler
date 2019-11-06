@@ -80,15 +80,33 @@ export default {
     }
   }),
 
-  put: jest.fn(url => {
+  // put: jest.fn(url => {
 
-    if (url === "http://localhost:8001/api/appointments/1") {
-      return Promise.resolve({
-        status: 204,
-        statusText: "No Content",
-        data: ""
-      });
-    }
+  //   if (url === "http://localhost:8001/api/appointments/1") {
+  //     return Promise.resolve({
+  //       status: 204,
+  //       statusText: "No Content",
+  //       data: fixtures.appointments.interview
+  //     });
+  //   }
+
+  // }),
+
+  put: jest.fn(url => {
+    return Promise.resolve({
+      status: 204,
+      statusText: "No Content",
+      data: ""
+    })
+  }),
+
+  delete: jest.fn(url => {
+
+    return Promise.resolve({
+      status: 204,
+      statusText: "No Content",
+      data: ""
+    })
 
   })
 

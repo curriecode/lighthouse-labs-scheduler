@@ -77,7 +77,7 @@ export default function useApplicationData() {
     console.log("appointment id: ", appointment.id)
     return axios.put("http://localhost:8001/api/appointments/" + appointment.id, appointment)
       .then((res) => {
-        // console.log("put res", res)
+        console.log("put res", res)
         let appointment = JSON.parse(res.config.data)
         const appointments = {
           ...state.appointments,
@@ -102,10 +102,12 @@ export default function useApplicationData() {
 
     return axios.delete("http://localhost:8001/api/appointments/" + appointment.id, appointment)
       .then((res) => {
-
         dispatch({ type: SET_SPOTS, value: +1 });
+        console.log("this is delete", res)
+
       })
       .catch((err) => {
+        console.log("here")
         throw err;
       })
   }
