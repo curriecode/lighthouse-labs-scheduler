@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 
 
 export default function InterviewerList(props) {
+  //shows interviewer selected for appointment
   const interviews = props.interviewers.map(mentor => {
     return (
       <InterviewerListItem
@@ -14,7 +15,6 @@ export default function InterviewerList(props) {
         selected={mentor.id === props.value}
         setInterviewer={event => props.onChange(mentor.id)}
       />
-
     );
   })
   return <Fragment>

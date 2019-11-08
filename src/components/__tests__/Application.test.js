@@ -27,12 +27,7 @@ describe("Application", () => {
     let appointments = getAllByTestId(container, "appointment");
     let appointment = appointments[0];
 
-
     fireEvent.click(getByAltText(appointment, "Add"));
-
-    // appointments = getAllByTestId(container, "appointment");
-
-    // appointment = appointments[0];
 
     fireEvent.change(getByPlaceholderText(appointment, /enter student name/i), {
       target: { value: "Lydia Miller-Jones" }
@@ -99,8 +94,6 @@ describe("Application", () => {
 
     expect(getByText(appointment, "Saving")).toBeInTheDocument();
 
-    await waitForElement(() => getByText(appointment, "Lydia Miller-Jones"));
-
     const day = getAllByTestId(container, "day").find(day =>
       queryByText(day, "Monday")
     );
@@ -108,6 +101,7 @@ describe("Application", () => {
     expect(getByText(day, "1 spots remaining")).toBeInTheDocument();
 
   });
+
   it("shows the save error when failing to save an appointment", async () => {
     axios.put.mockRejectedValueOnce();
 

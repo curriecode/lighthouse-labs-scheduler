@@ -1,6 +1,7 @@
 import React from "react";
 
 export default function Empty(props) {
+  //component to add an interview
   return (
     <main className="appointment__add">
       <img

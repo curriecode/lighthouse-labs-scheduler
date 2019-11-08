@@ -29,6 +29,7 @@ export default function Appointment(props) {
 
 
   function save(name, interviewer) {
+    //determines if creating or editing so spots remaining is updated correctly
     let creating = mode === CREATE ? true : false
 
     transition(SAVING)
@@ -36,12 +37,11 @@ export default function Appointment(props) {
       student: name,
       interviewer
     };
-    // console.log("this is id", props.id)
     props.bookInterview(props.id, interview, creating)
+      //when interview is sucessfully booked transitions to show component to show the booked interview
       .then(() => transition(SHOW))
       .catch((err) => {
         transition(ERROR_SAVE, true)
-        // console.log("error bbbbb", err)
       })
   }
 
@@ -56,12 +56,12 @@ export default function Appointment(props) {
       .catch(() => transition(ERROR_DELETE, true))
   }
 
+  //calls transition function to find current state and transition components
   return (
     <article
       className="appointment"
       data-testid="appointment"
     >
-
       <Header time={props.time} />
 
       {mode === EMPTY && <Empty onAdd={() => transition(CREATE)} />}
@@ -79,7 +79,6 @@ export default function Appointment(props) {
           interviewers={props.interviewers}
           onSave={save}
         />)}
-
       {
         mode === SHOW && (
           <Show
@@ -89,7 +88,6 @@ export default function Appointment(props) {
             onEdit={() => transition(EDIT)}
 
           />)}
-
       {
         mode === EDIT && (
           <Form onCancel={() => back()}
@@ -99,28 +97,22 @@ export default function Appointment(props) {
           />)}
 
       {
-
         mode === SAVING && (
           <Status message={"Saving"}
           />)}
-
       {
         mode === DELETING && (
           <Status message={"Deleting"}
-          />)
-      }
+          />)}
 
       {
-
         mode === CONFIRM && (
           <Confirm
             message={"Are you sure you want to delete this appointment?"}
             onCancel={() => back()}
             onConfirm={cancel}
           />)}
-
     </article>
-
   )
 }
 

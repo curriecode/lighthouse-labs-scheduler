@@ -4,6 +4,7 @@ import Button from "../Button"
 
 export default function Form(props) {
   const [name, setName] = useState(props.name || "");
+
   let defaultInterviewId;
   if (!props.interview || !props.interview.interviewer) {
     defaultInterviewId = null
@@ -12,24 +13,26 @@ export default function Form(props) {
   }
   const [interviewer, setInterviewer] = useState(defaultInterviewId);
 
+  // resets interview form
   function reset() {
     setName("");
     setInterviewer(null);
   }
-
+  // cancels interview form
   function cancel() {
     reset();
     props.onCancel();
   }
 
   let placeholderText = "";
-
+  //replaces placeholder with student name when edit button is clicked
   if (props.interview && props.interview.student) {
     placeholderText = props.interview.student
   } else {
     placeholderText = "Enter Student Name"
   }
 
+  //shows error if student name on form is left blank
   function validate() {
     if (name === "") {
       setError("Student name cannot be blank");

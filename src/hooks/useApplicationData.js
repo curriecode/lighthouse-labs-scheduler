@@ -6,8 +6,6 @@ import reducer from "reducers/application";
 const SET_DAY = "SET_DAY";
 const SET_APPLICATION_DATA = "SET_APPLICATION_DATA";
 const SET_INTERVIEW = "SET_INTERVIEW";
-// const SET_SPOTS = "SET_SPOTS";
-
 
 export default function useApplicationData() {
 
@@ -19,13 +17,13 @@ export default function useApplicationData() {
   });
 
   useEffect(() => {
+    //gets data from all apis, called on render
     Promise.all([
       axios.get("http://localhost:8001/api/days"),
       axios.get("http://localhost:8001/api/appointments"),
       axios.get("http://localhost:8001/api/interviewers")
     ])
       .then((res) => {
-        // console.log(res[2].data);
 
         dispatch({
           type: SET_APPLICATION_DATA, value: {
@@ -41,26 +39,23 @@ export default function useApplicationData() {
   const setDay = day => dispatch({ type: SET_DAY, value: day })
 
   function bookInterview(id, interview, creating) {
-
+    //creates interview object for new interview
     const appointment = {
       ...state.appointments[id],
       interview: { ...interview }
     };
-
-
-    // console.log("appointment id: ", appointment.id)
     return axios.put("http://localhost:8001/api/appointments/" + appointment.id, appointment)
       .then((res) => {
-        // console.log("put res", res)
+        //returns interview object when request is done and info has updated for creating or editing
         let appointment = JSON.parse(res.config.data)
         const appointments = {
           ...state.appointments,
           [id]: appointment
         };
+
+        //sutype is set to determine if interview is created or edited to update spots remaing accordingly
         let subType = creating ? "booking" : "editing"
         dispatch({ type: SET_INTERVIEW, value: { appointments: appointments, subType: subType } })
-        // dispatch({ type: SET_SPOTS, value: -1 })
-
       })
       .catch((err) => {
         throw err;
@@ -80,17 +75,11 @@ export default function useApplicationData() {
     return axios.delete("http://localhost:8001/api/appointments/" + appointment.id, appointment)
       .then((res) => {
         dispatch({ type: SET_INTERVIEW, value: { appointments: appointments, subType: "cancelled" } });
-
-        // dispatch({ type: SET_SPOTS, value: +1 });
-        // console.log("this is delete", res)
-
       })
       .catch((err) => {
-        // console.log("here")
         throw err;
       })
   }
-
   return {
     state,
     setDay,

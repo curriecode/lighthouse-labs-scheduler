@@ -5,9 +5,7 @@ export default function reducer(state, action) {
   const SET_DAY = "SET_DAY";
   const SET_APPLICATION_DATA = "SET_APPLICATION_DATA";
   const SET_INTERVIEW = "SET_INTERVIEW";
-  // const SET_SPOTS = "SET_SPOTS";
-
-
+  //changes number of remaining spots when interview is created/deleted/edited
   const setSpots = (state, action) => {
     let days = state.days
     let mod;
@@ -30,7 +28,6 @@ export default function reducer(state, action) {
     return { ...state, days: spotsChanged };
   }
 
-
   switch (action.type) {
     case SET_DAY:
       return { ...state, day: action.value }
@@ -47,6 +44,3 @@ export default function reducer(state, action) {
       );
   }
 }
-// export const SET_DAY = "SET_DAY";
-// export const SET_APPLICATION_DATA = "SET_APPLICATION_DATA";
-// export const SET_INTERVIEW = "SET_INTERVIEW";
