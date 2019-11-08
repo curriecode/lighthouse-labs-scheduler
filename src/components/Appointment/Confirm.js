@@ -17,5 +17,5 @@ export default function Confirm(props) {
           </Button>
       </section>
     </main>
-  )
+  );
 }

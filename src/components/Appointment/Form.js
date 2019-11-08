@@ -7,9 +7,9 @@ export default function Form(props) {
 
   let defaultInterviewId;
   if (!props.interview || !props.interview.interviewer) {
-    defaultInterviewId = null
+    defaultInterviewId = null;
   } else {
-    defaultInterviewId = props.interview.interviewer.id
+    defaultInterviewId = props.interview.interviewer.id;
   }
   const [interviewer, setInterviewer] = useState(defaultInterviewId);
 
@@ -27,9 +27,9 @@ export default function Form(props) {
   let placeholderText = "";
   //replaces placeholder with student name when edit button is clicked
   if (props.interview && props.interview.student) {
-    placeholderText = props.interview.student
+    placeholderText = props.interview.student;
   } else {
-    placeholderText = "Enter Student Name"
+    placeholderText = "Enter Student Name";
   }
 
   //shows error if student name on form is left blank

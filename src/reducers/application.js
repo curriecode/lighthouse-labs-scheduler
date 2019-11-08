@@ -7,24 +7,24 @@ export default function reducer(state, action) {
   const SET_INTERVIEW = "SET_INTERVIEW";
   //changes number of remaining spots when interview is created/deleted/edited
   const setSpots = (state, action) => {
-    let days = state.days
+    let days = state.days;
     let mod;
     if (action.value.subType === "booking") {
-      mod = -1
+      mod = -1;
     } else if (action.value.subType === "editing") {
-      mod = 0
+      mod = 0;
     } else {
-      mod = +1
+      mod = +1;
     }
     let spotsChanged = days.map((day) => {
       if (state.day === day.name) {
         let remainingSpots = day.spots + mod;
-        day.spots = remainingSpots
+        day.spots = remainingSpots;
         return { ...day }
       } else {
         return day;
       }
-    })
+    });
     return { ...state, days: spotsChanged };
   }
 
@@ -36,7 +36,7 @@ export default function reducer(state, action) {
     case SET_INTERVIEW:
 
       const beforeState = { ...state, appointments: action.value.appointments }
-      const days = setSpots(beforeState, action)
+      const days = setSpots(beforeState, action);
       return { ...beforeState, ...days }
     default:
       throw new Error(

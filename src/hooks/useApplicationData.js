@@ -33,10 +33,10 @@ export default function useApplicationData() {
           }
         })
       });
-  }, [])
+  }, []);
 
 
-  const setDay = day => dispatch({ type: SET_DAY, value: day })
+  const setDay = day => dispatch({ type: SET_DAY, value: day });
 
   function bookInterview(id, interview, creating) {
     //creates interview object for new interview
@@ -59,7 +59,7 @@ export default function useApplicationData() {
       })
       .catch((err) => {
         throw err;
-      })
+      });
   }
 
   function cancelInterview(id, interview) {
@@ -78,7 +78,7 @@ export default function useApplicationData() {
       })
       .catch((err) => {
         throw err;
-      })
+      });
   }
   return {
     state,

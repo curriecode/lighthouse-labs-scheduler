@@ -13,5 +13,5 @@ export default function Status(props) {
         {props.message}
       </h1>
     </main>
-  )
+  );
 }

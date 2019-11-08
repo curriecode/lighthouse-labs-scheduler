@@ -21,7 +21,6 @@ export default function Appointment(props) {
   const EDIT = "EDIT"
   const ERROR_SAVE = "ERROR_SAVE"
   const ERROR_DELETE = "ERROR_DELETE"
-  // props.interviewer = [];
   const { mode, transition, back } = useVisualMode(
     props.interview ? SHOW : EMPTY
   );
@@ -42,7 +41,7 @@ export default function Appointment(props) {
       .then(() => transition(SHOW))
       .catch((err) => {
         transition(ERROR_SAVE, true)
-      })
+      });
   }
 
   function cancel(name, interviewer) {
@@ -53,7 +52,7 @@ export default function Appointment(props) {
     };
     props.cancelInterview(props.id, interview)
       .then(() => transition(EMPTY))
-      .catch(() => transition(ERROR_DELETE, true))
+      .catch(() => transition(ERROR_DELETE, true));
   }
 
   //calls transition function to find current state and transition components
@@ -113,6 +112,6 @@ export default function Appointment(props) {
             onConfirm={cancel}
           />)}
     </article>
-  )
+  );
 }
 
