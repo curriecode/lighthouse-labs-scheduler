@@ -29,29 +29,31 @@ export default function Appointment(props) {
 
 
   function save(name, interviewer) {
+    let creating = mode === CREATE ? true : false
+
     transition(SAVING)
     const interview = {
       student: name,
       interviewer
     };
-    console.log("this is id", props.id)
-    props.bookInterview(props.id, interview)
+    // console.log("this is id", props.id)
+    props.bookInterview(props.id, interview, creating)
       .then(() => transition(SHOW))
       .catch((err) => {
-        transition(ERROR_SAVE)
-        console.log("error bbbbb", err)
+        transition(ERROR_SAVE, true)
+        // console.log("error bbbbb", err)
       })
   }
 
   function cancel(name, interviewer) {
-    transition(DELETING)
+    transition(DELETING, true)
     const interview = {
       student: name,
       interviewer
     };
     props.cancelInterview(props.id, interview)
       .then(() => transition(EMPTY))
-      .catch(() => transition(ERROR_DELETE))
+      .catch(() => transition(ERROR_DELETE, true))
   }
 
   return (

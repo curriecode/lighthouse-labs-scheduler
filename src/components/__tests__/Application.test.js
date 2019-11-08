@@ -26,18 +26,20 @@ describe("Application", () => {
 
     let appointments = getAllByTestId(container, "appointment");
     let appointment = appointments[0];
-    // console.log("appointment before: ", debug(appointments))
+
+
     fireEvent.click(getByAltText(appointment, "Add"));
 
-    appointments = getAllByTestId(container, "appointment");
+    // appointments = getAllByTestId(container, "appointment");
 
-    appointment = appointments[0];
+    // appointment = appointments[0];
 
     fireEvent.change(getByPlaceholderText(appointment, /enter student name/i), {
       target: { value: "Lydia Miller-Jones" }
     });
 
     fireEvent.click(getByAltText(appointment, "Sylvia Palmer"));
+
     fireEvent.click(getByText(appointment, "Save"));
 
     expect(getByText(appointment, "Saving")).toBeInTheDocument();
@@ -97,13 +99,13 @@ describe("Application", () => {
 
     expect(getByText(appointment, "Saving")).toBeInTheDocument();
 
-    // await waitForElementToBeRemoved(() => getByText(appointment, "Archie Cohen"));
+    await waitForElement(() => getByText(appointment, "Lydia Miller-Jones"));
 
-    // const day = getAllByTestId(container, "day").find(day =>
-    //   queryByText(day, "Monday")
-    // );
+    const day = getAllByTestId(container, "day").find(day =>
+      queryByText(day, "Monday")
+    );
 
-    // expect(getByText(day, "1 spots remaining")).toBeInTheDocument();
+    expect(getByText(day, "1 spots remaining")).toBeInTheDocument();
 
   });
   it("shows the save error when failing to save an appointment", async () => {

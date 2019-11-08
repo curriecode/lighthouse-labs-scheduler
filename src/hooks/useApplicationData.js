@@ -1,12 +1,12 @@
 
-import React, { useState, useEffect, useReducer } from "react";
+import { useEffect, useReducer } from "react";
 import axios from "axios"
 import reducer from "reducers/application";
 
 const SET_DAY = "SET_DAY";
 const SET_APPLICATION_DATA = "SET_APPLICATION_DATA";
 const SET_INTERVIEW = "SET_INTERVIEW";
-const SET_SPOTS = "SET_SPOTS";
+// const SET_SPOTS = "SET_SPOTS";
 
 
 export default function useApplicationData() {
@@ -15,7 +15,7 @@ export default function useApplicationData() {
     day: "Monday",
     days: [],
     appointments: {},
-    interviewers: {},
+    interviewers: {}
   });
 
   useEffect(() => {
@@ -40,23 +40,26 @@ export default function useApplicationData() {
 
   const setDay = day => dispatch({ type: SET_DAY, value: day })
 
-  function bookInterview(id, interview) {
+  function bookInterview(id, interview, creating) {
 
     const appointment = {
       ...state.appointments[id],
       interview: { ...interview }
     };
-    console.log("appointment id: ", appointment.id)
+
+
+    // console.log("appointment id: ", appointment.id)
     return axios.put("http://localhost:8001/api/appointments/" + appointment.id, appointment)
       .then((res) => {
-        console.log("put res", res)
+        // console.log("put res", res)
         let appointment = JSON.parse(res.config.data)
         const appointments = {
           ...state.appointments,
           [id]: appointment
         };
-        dispatch({ type: SET_INTERVIEW, value: appointments })
-        dispatch({ type: SET_SPOTS, value: -1 })
+        let subType = creating ? "booking" : "editing"
+        dispatch({ type: SET_INTERVIEW, value: { appointments: appointments, subType: subType } })
+        // dispatch({ type: SET_SPOTS, value: -1 })
 
       })
       .catch((err) => {
@@ -67,19 +70,23 @@ export default function useApplicationData() {
   function cancelInterview(id, interview) {
     const appointment = {
       ...state.appointments[id],
-      interview: { ...interview }
+      interview: null
     };
-
-    interview = null
+    const appointments = {
+      ...state.appointments,
+      [id]: appointment
+    };
 
     return axios.delete("http://localhost:8001/api/appointments/" + appointment.id, appointment)
       .then((res) => {
-        dispatch({ type: SET_SPOTS, value: +1 });
-        console.log("this is delete", res)
+        dispatch({ type: SET_INTERVIEW, value: { appointments: appointments, subType: "cancelled" } });
+
+        // dispatch({ type: SET_SPOTS, value: +1 });
+        // console.log("this is delete", res)
 
       })
       .catch((err) => {
-        console.log("here")
+        // console.log("here")
         throw err;
       })
   }
