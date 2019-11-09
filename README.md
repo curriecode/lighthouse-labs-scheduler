@@ -20,12 +20,12 @@ Interview Scheduler is a modern client application built with the React view lib
 
 ## Final Product
 
- ![ ](#)
-  ![ ](#)
-  ![ ](#)
+ !["View Appointments"](docs/view-interview.png)
+  !["Create a new interview"](docs/interview-form.png)
+  !["Edit existing interview"](docs/create-interview.png)
 
 ## Getting Started
-- First clone the [API](https://github.com/curriecode/scheduler-api) and follow the README to get it up and running.
+- First clone the [API](https://github.com/curriecode/scheduler-api) and follow instructions in the README to get it up and running.
 
 - Clone this repositoy install any dependencies by running `npm install` and run command `npm start` in the root directory.
 
